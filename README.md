@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cr7watch — Lüks Saat Katalog Sitesi
 
-## Getting Started
+Profesyonel, lüks hissi veren bir saat **katalog** sitesi. Müşteriler markaları/modelleri gezer,
+beğendiği modeli **WhatsApp** ile sipariş eder. Saatçi, **şifreli admin panelden** ürün ekler/siler,
+fiyat değiştirir, çoklu fotoğraf yükler.
 
-First, run the development server:
+- **Teknoloji:** Next.js 16 (App Router) · TypeScript · Tailwind CSS v4 · Supabase · Vercel
+- **Dil:** Türkçe
+- **WhatsApp:** 0555 077 65 52
+
+> Not: Supabase **kurulmadan da** site çalışır — bu durumda yerleşik demo (seed) verisi gösterilir.
+> Admin panelinin çalışması için Supabase gerekir.
+
+---
+
+## 1) Yerelde Çalıştırma
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Tarayıcıdan `http://localhost:3000` açın. (Port doluysa Next otomatik başka port seçer.)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 2) Supabase Kurulumu (admin panel için)
 
-## Learn More
+1. [supabase.com](https://supabase.com) → ücretsiz hesap aç → **New Project** oluştur.
+2. Proje açıldıktan sonra sol menü **SQL Editor**:
+   - `supabase/schema.sql` içeriğini yapıştır → **Run** (tablolar, güvenlik, foto deposu).
+   - `supabase/seed-brands.sql` içeriğini yapıştır → **Run** (22 markayı ekler).
+3. **Yönetici kullanıcı** oluştur: sol menü **Authentication → Users → Add user** →
+   saatçinin e-postası + şifresi (Email confirm’i kapalı/otomatik onaylı seç).
+4. **Anahtarlar:** sol menü **Project Settings → API**:
+   - `Project URL`
+   - `anon public` key
+5. Proje kökünde `.env.local` dosyası oluştur (`.env.example`’ı kopyalayabilirsin):
 
-To learn more about Next.js, take a look at the following resources:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGci...
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+6. `npm run dev` ile yeniden başlat. Artık site Supabase’den okur.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 3) Admin Paneli Kullanımı
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Adres: `/admin` (giriş: `/admin/login`)
+- Giriş: yukarıda oluşturduğun e-posta + şifre.
+- **Ürünler:** ekle / düzenle / sil, öne çıkan & “Satıldı” işaretle.
+- **Ürün formu:** ad, marka, seri, cinsiyet, **fiyat**, açıklama + **çoklu fotoğraf yükleme**
+  (ilk foto kapak; oklarla sırala; sil). Fotoğraflar Supabase Storage’a yüklenir.
+- **Markalar:** marka ekle / düzenle / sil.
+- **Ayarlar:** WhatsApp, Instagram, ana sayfa metinleri.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> **Önemli (fotoğraflar):** Şu anda demo görselleri internetten (yüksek çözünürlüklü) konuldu.
+> Saatçi, her model için **kendi gerçek fotoğraflarını** admin panelden yükleyip değiştirmeli.
+> Bir markada ilk gerçek ürün eklendiğinde site o markada DB verisini gösterir.
+
+---
+
+## 4) Vercel’e Yayınlama
+
+1. Kodu bir GitHub deposuna gönder.
+2. [vercel.com](https://vercel.com) → **Add New → Project** → repoyu seç.
+3. **Environment Variables** kısmına `.env.local`’daki 2 değişkeni ekle.
+4. **Deploy.** Ardından alan adını (ör. `cr7watch.com`) Vercel’den bağla.
+5. Canlı URL’yi `src/lib/site.ts` içindeki `url` alanına yaz (SEO/OG için).
+
+---
+
+## Proje Yapısı (özet)
+
+```
+src/
+  app/
+    (site)/        → genel site (ana sayfa, markalar, marka, saat, arama, iletisim)
+    admin/         → yönetim paneli (login + (panel))
+    sitemap.ts, robots.ts, icon.svg, opengraph-image.tsx
+  components/      → Header, Footer, ProductCard, ProductGallery, HeroSlideshow, admin/*
+  data/catalog.ts  → demo (seed) marka & model verisi
+  lib/             → site ayarları, tipler, veri erişimi (catalog), admin işlemleri, supabase
+supabase/
+  schema.sql, seed-brands.sql
+```
+
+İçerik (marka adları, model fiyatları, fotoğraflar) bilgilendirme amaçlıdır ve admin panelden yönetilir.
