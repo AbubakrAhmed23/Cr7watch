@@ -5,27 +5,27 @@
    ============================================================ */
 
 @theme {
-  /* Renkler — açık, ferah lüks tema (krem/fildişi + sıcak altın) */
-  --color-ink: #faf7f1;        /* sayfa zemini (fildişi) */
-  --color-ink-soft: #f2ece1;   /* alternatif bölüm zemini */
-  --color-surface: #ffffff;    /* kartlar */
-  --color-surface-2: #efe8db;
-  --color-line: #e7dfd0;       /* ince kenarlıklar */
+  /* Renkler — dingin, sıcak premium tema (yumuşak kum + antika altın) */
+  --color-ink: #f7f4ee;        /* sayfa zemini (yumuşak kum) */
+  --color-ink-soft: #efeae0;   /* alternatif bölüm zemini */
+  --color-surface: #fffefb;    /* kartlar (sıcak beyaz) */
+  --color-surface-2: #e9e2d4;
+  --color-line: #e6dfd1;       /* ince kenarlıklar */
 
-  --color-cream: #211e19;      /* ana metin (koyu kahve) */
-  --color-muted: #6c665d;      /* ikincil metin */
-  --color-muted-2: #9b9387;    /* üçüncül metin */
+  --color-cream: #26221b;      /* ana metin (sıcak antrasit) */
+  --color-muted: #6f685d;      /* ikincil metin */
+  --color-muted-2: #a49c8d;    /* üçüncül metin */
 
-  --color-gold: #b0822f;       /* açık zeminde okunaklı altın */
-  --color-gold-light: #caa14a;
-  --color-gold-dark: #8a6526;
+  --color-gold: #a07c39;       /* antika altın — sakin, okunaklı */
+  --color-gold-light: #c2a05a;
+  --color-gold-dark: #7a5b27;
 
   /* Fontlar (next/font değişkenleri) */
   --font-serif: var(--font-playfair), Georgia, "Times New Roman", serif;
   --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
 
   /* Yumuşak gölgeler */
-  --shadow-luxe: 0 22px 55px -26px rgba(70, 52, 20, 0.4);
+  --shadow-luxe: 0 26px 60px -30px rgba(60, 45, 20, 0.35);
 }
 
 :root {
@@ -42,7 +42,9 @@ html {
 }
 
 body {
-  background: var(--color-ink);
+  background:
+    radial-gradient(1100px 520px at 50% -260px, rgba(255, 253, 246, 0.9), transparent 70%),
+    var(--color-ink);
   color: var(--color-cream);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
@@ -127,4 +129,75 @@ h1, h2, h3, .font-serif {
 .btn-outline:hover {
   border-color: var(--color-gold);
   color: var(--color-gold-light);
+}
+
+/* ============================================================
+   "Wow" dokunuşları
+   ============================================================ */
+
+/* Kaydırınca beliren (scroll reveal) */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* Akan marka şeridi */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 38s linear infinite;
+}
+.marquee-mask:hover .marquee-track {
+  animation-play-state: paused;
+}
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+/* WhatsApp nabız halkası */
+@keyframes ping-ring {
+  0% { transform: scale(1); opacity: 0.55; }
+  70%, 100% { transform: scale(1.9); opacity: 0; }
+}
+.pulse-ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: #25d366;
+  animation: ping-ring 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+  z-index: -1;
+}
+
+/* Yumuşak yukarı süzülme (görünce) */
+@keyframes float-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-float-in { animation: float-in 0.4s ease both; }
+
+/* Ürün galerisi yakınlaştırma (imleç takipli) */
+.zoom-area { cursor: zoom-in; overflow: hidden; }
+.zoom-area img {
+  transition: transform 0.35s ease;
+  transform-origin: var(--zoom-x, 50%) var(--zoom-y, 50%);
+}
+.zoom-area.zoomed { cursor: zoom-out; }
+.zoom-area.zoomed img {
+  transform: scale(2.1);
+  transition: transform 0.12s ease;
 }

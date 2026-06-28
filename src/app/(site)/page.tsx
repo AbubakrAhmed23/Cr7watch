@@ -2,6 +2,8 @@ import Link from "next/link";
 import HeroSlideshow from "@/components/HeroSlideshow";
 import ProductCard from "@/components/ProductCard";
 import BrandCard from "@/components/BrandCard";
+import BrandMarquee from "@/components/BrandMarquee";
+import Reveal from "@/components/Reveal";
 import { SITE, whatsappLink } from "@/lib/site";
 import {
   getBrands,
@@ -81,6 +83,9 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* ---------------- AKAN MARKA ŞERİDİ ---------------- */}
+      <BrandMarquee brands={allBrands} />
+
       {/* ---------------- ÖNE ÇIKANLAR ---------------- */}
       <section className="container-luxe py-16 md:py-24">
         <SectionHead
@@ -88,11 +93,11 @@ export default async function Home() {
           title="Öne Çıkanlar"
           link={{ href: "/markalar", label: "Tümünü Gör" }}
         />
-        <div className="grid grid-cols-2 gap-5 md:grid-cols-4">
+        <Reveal className="grid grid-cols-2 gap-5 md:grid-cols-4">
           {featured.map((p) => (
             <ProductCard key={p.id} product={p} brandName={nameOf(p.brandSlug)} />
           ))}
-        </div>
+        </Reveal>
       </section>
 
       {/* ---------------- MARKALAR ---------------- */}
@@ -102,7 +107,7 @@ export default async function Home() {
           title="Markalar"
           link={{ href: "/markalar", label: "Tüm Markalar" }}
         />
-        <div className="grid grid-cols-2 gap-5 md:grid-cols-4">
+        <Reveal className="grid grid-cols-2 gap-5 md:grid-cols-4">
           {brands.map((b) => (
             <BrandCard
               key={b.slug}
@@ -111,12 +116,12 @@ export default async function Home() {
               count={counts[b.slug]}
             />
           ))}
-        </div>
+        </Reveal>
       </section>
 
       {/* ---------------- CTA ---------------- */}
       <section className="container-luxe pb-24">
-        <div className="relative overflow-hidden rounded-3xl border border-gold/30 bg-gradient-to-br from-surface to-ink-soft px-6 py-14 text-center md:py-20">
+        <Reveal className="relative overflow-hidden rounded-3xl border border-gold/30 bg-gradient-to-br from-surface to-ink-soft px-6 py-14 text-center md:py-20">
           <div className="gold-rule mx-auto mb-8 w-24" />
           <h2 className="font-serif text-3xl md:text-4xl">
             Aradığınız modeli bulamadınız mı?
@@ -133,7 +138,7 @@ export default async function Home() {
           >
             WhatsApp’tan Yazın · {SITE.phoneDisplay}
           </a>
-        </div>
+        </Reveal>
       </section>
     </>
   );

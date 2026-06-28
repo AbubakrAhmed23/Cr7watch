@@ -15,16 +15,34 @@ export default function ProductGallery({
 }) {
   const safe = images.length ? images : [{ url: "", label: "Görsel" }];
   const [index, setIndex] = useState(0);
+  const [zoomed, setZoomed] = useState(false);
   const current = safe[index];
   const many = safe.length > 1;
+  const canZoom = Boolean(current.url);
 
   const go = (dir: number) =>
     setIndex((i) => (i + dir + safe.length) % safe.length);
 
+  function onMove(e: React.MouseEvent<HTMLDivElement>) {
+    if (!canZoom) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width) * 100;
+    const y = ((e.clientY - r.top) / r.height) * 100;
+    e.currentTarget.style.setProperty("--zoom-x", `${x}%`);
+    e.currentTarget.style.setProperty("--zoom-y", `${y}%`);
+    if (!zoomed) setZoomed(true);
+  }
+
   return (
     <div className="flex flex-col gap-4">
       {/* Ana görsel */}
-      <div className="relative aspect-square overflow-hidden rounded-2xl border border-line bg-ink-soft">
+      <div
+        className={`relative aspect-square rounded-2xl border border-line bg-ink-soft ${
+          canZoom ? "zoom-area" : "overflow-hidden"
+        } ${zoomed ? "zoomed" : ""}`}
+        onMouseMove={onMove}
+        onMouseLeave={() => setZoomed(false)}
+      >
         <SmartImage
           src={current.url}
           alt={`${alt} — ${current.label ?? ""}`}
@@ -32,6 +50,16 @@ export default function ProductGallery({
           priority
           sizes="(max-width: 1024px) 100vw, 50vw"
         />
+
+        {/* Yakınlaştırma ipucu */}
+        {canZoom && !zoomed && (
+          <span className="pointer-events-none absolute bottom-4 right-4 z-10 hidden items-center gap-1.5 rounded-full border border-line bg-surface/85 px-3 py-1 text-[11px] text-muted backdrop-blur md:flex">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5M11 8v6M8 11h6" strokeLinecap="round" />
+            </svg>
+            Yakınlaştır
+          </span>
+        )}
 
         {current.label && (
           <span className="absolute left-4 top-4 rounded-full border border-line bg-ink/70 px-3 py-1 text-xs tracking-wide text-cream/90 backdrop-blur">

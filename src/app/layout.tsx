@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/lib/site";
@@ -16,32 +16,62 @@ const inter = Inter({
   display: "swap",
 });
 
+const TITLE = `${SITE.name} — Lüks Saat Koleksiyonu`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `${SITE.name} — Lüks Saat Koleksiyonu`,
+    default: TITLE,
     template: `%s | ${SITE.name}`,
   },
+  applicationName: SITE.name,
   description: SITE.description,
   keywords: [
     "saat",
     "lüks saat",
+    "replika saat",
     "rolex",
     "patek philippe",
     "audemars piguet",
     "cartier",
+    "richard mille",
     "erkek saat",
     "kadın saat",
+    "İstanbul saat",
     "Cr7watch",
   ],
+  authors: [{ name: SITE.name }],
+  creator: SITE.name,
+  publisher: SITE.name,
+  category: "shopping",
   openGraph: {
-    title: `${SITE.name} — Lüks Saat Koleksiyonu`,
+    title: TITLE,
     description: SITE.description,
     type: "website",
     locale: "tr_TR",
     siteName: SITE.name,
+    url: SITE.url,
   },
-  robots: { index: true, follow: true },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: SITE.description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#f7f4ee",
+  colorScheme: "light",
 };
 
 export default function RootLayout({

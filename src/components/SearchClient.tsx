@@ -8,11 +8,13 @@ import type { Product } from "@/lib/types";
 export default function SearchClient({
   products,
   brandNames,
+  initialQuery = "",
 }: {
   products: Product[];
   brandNames: Record<string, string>;
+  initialQuery?: string;
 }) {
-  const [q, setQ] = useState("");
+  const [q, setQ] = useState(initialQuery);
   const nameOf = (slug: string) => brandNames[slug] ?? "";
   const results = useMemo(
     () => filterProducts(products, q, nameOf),

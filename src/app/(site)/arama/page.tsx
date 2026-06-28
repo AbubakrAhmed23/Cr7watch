@@ -7,8 +7,16 @@ export const metadata: Metadata = {
   description: "Cr7watch koleksiyonunda marka, model veya referansa göre arama yapın.",
 };
 
-export default async function SearchPage() {
-  const [products, brands] = await Promise.all([getActiveProducts(), getBrands()]);
+export default async function SearchPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const [{ q }, products, brands] = await Promise.all([
+    searchParams,
+    getActiveProducts(),
+    getBrands(),
+  ]);
   const brandNames: Record<string, string> = {};
   brands.forEach((b) => (brandNames[b.slug] = b.name));
 
@@ -19,7 +27,11 @@ export default async function SearchPage() {
         <h1 className="font-serif text-4xl md:text-5xl">Model Ara</h1>
       </header>
 
-      <SearchClient products={products} brandNames={brandNames} />
+      <SearchClient
+        products={products}
+        brandNames={brandNames}
+        initialQuery={q ?? ""}
+      />
     </div>
   );
 }
