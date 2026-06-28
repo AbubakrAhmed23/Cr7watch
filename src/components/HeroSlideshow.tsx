@@ -29,6 +29,8 @@ export default function HeroSlideshow({ images }: { images: string[] }) {
             alt=""
             fill
             priority={i === 0}
+            loading={i === 0 ? "eager" : "lazy"}
+            quality={65}
             sizes="100vw"
             className={`object-cover transition-opacity duration-[1500ms] ease-in-out ${
               i === active ? "opacity-100" : "opacity-0"

@@ -5,9 +5,11 @@
 export const SITE = {
   name: "Cr7watch",
   tagline: "Zamanın Zarafeti",
+  // ~130 karakter (Google ve sosyal önizleme limitleri içinde)
   description:
-    "Cr7watch — Rolex, Patek Philippe, Audemars Piguet, Cartier ve daha fazlası. Özenle seçilmiş lüks saat koleksiyonu. Beğendiğiniz modeli WhatsApp ile sipariş edin.",
-  url: "https://cr7watch.com",
+    "Rolex, Patek Philippe, Cartier ve daha fazlası — özenle seçilmiş lüks saat koleksiyonu. Beğendiğin modeli WhatsApp’tan sipariş et.",
+  // Canlı adres. Alan adı bağlanınca Vercel'de NEXT_PUBLIC_SITE_URL ayarlanır.
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://cr7watch.vercel.app",
 
   // İletişim
   whatsappRaw: "05550776552", // yerel format (gösterim)

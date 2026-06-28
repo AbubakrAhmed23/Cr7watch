@@ -27,16 +27,24 @@ export default async function Home() {
   const nameOf = (slug: string) => allBrands.find((b) => b.slug === slug)?.name;
 
   // Hero arka plan görselleri: SADECE dosyalar/ klasöründen gelen gerçek ürün
-  // fotoğrafları — TÜM markaları tanıtmak için her markadan birer kapak.
-  const heroImages: string[] = [];
+  // fotoğrafları — markalardan birer kapak. Performans için en fazla 6 tane
+  // (markalara eşit yayılmış) seçiyoruz; markaların tamamı aşağıdaki akan
+  // şeritte zaten tanıtılıyor.
+  const perBrand: string[] = [];
   const seenBrands = new Set<string>();
   for (const p of allProducts) {
     const url = p.images[0]?.url;
     if (!url || !url.startsWith("/urunler/")) continue;
     if (seenBrands.has(p.brandSlug)) continue;
     seenBrands.add(p.brandSlug);
-    heroImages.push(url);
+    perBrand.push(url);
   }
+  const HERO_COUNT = 6;
+  const step = Math.max(1, Math.floor(perBrand.length / HERO_COUNT));
+  const heroImages = Array.from(
+    { length: Math.min(HERO_COUNT, perBrand.length) },
+    (_, i) => perBrand[i * step]
+  );
 
   return (
     <>
