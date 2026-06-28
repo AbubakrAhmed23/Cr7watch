@@ -29,7 +29,8 @@ Tarayıcıdan `http://localhost:3000` açın. (Port doluysa Next otomatik başka
 1. [supabase.com](https://supabase.com) → ücretsiz hesap aç → **New Project** oluştur.
 2. Proje açıldıktan sonra sol menü **SQL Editor**:
    - `supabase/schema.sql` içeriğini yapıştır → **Run** (tablolar, güvenlik, foto deposu).
-   - `supabase/seed-brands.sql` içeriğini yapıştır → **Run** (22 markayı ekler).
+   - `supabase/seed-brands.sql` içeriğini yapıştır → **Run** (21 markayı ekler).
+   - `supabase/seed-products.sql` içeriğini yapıştır → **Run** (210 modeli + görsellerini ekler; admin'den düzenlenebilir).
 3. **Yönetici kullanıcı** oluştur: sol menü **Authentication → Users → Add user** →
    saatçinin e-postası + şifresi (Email confirm’i kapalı/otomatik onaylı seç).
 4. **Anahtarlar:** sol menü **Project Settings → API**:

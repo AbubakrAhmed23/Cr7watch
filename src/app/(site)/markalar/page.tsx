@@ -8,6 +8,8 @@ export const metadata: Metadata = {
     "Cr7watch markaları — Rolex, Patek Philippe, Audemars Piguet, Cartier, Richard Mille ve daha fazlası.",
 };
 
+export const revalidate = 60;
+
 export default async function BrandsPage() {
   const [brands, counts, products] = await Promise.all([
     getBrands(),

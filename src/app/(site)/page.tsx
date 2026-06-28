@@ -11,6 +11,9 @@ import {
   brandCover,
 } from "@/lib/catalog";
 
+// Admin değişiklikleri en geç 60 sn'de canlıya yansır (ISR).
+export const revalidate = 60;
+
 export default async function Home() {
   const [featured, allBrands, counts, allProducts] = await Promise.all([
     getFeatured(8),

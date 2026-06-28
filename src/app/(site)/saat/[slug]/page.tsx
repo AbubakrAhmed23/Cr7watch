@@ -8,6 +8,8 @@ import { products as seedProducts } from "@/data/catalog";
 import { orderLink, whatsappLink } from "@/lib/site";
 import { formatPrice, GENDER_LABEL } from "@/lib/utils";
 
+export const revalidate = 60;
+
 export function generateStaticParams() {
   return seedProducts.map((p) => ({ slug: p.slug }));
 }

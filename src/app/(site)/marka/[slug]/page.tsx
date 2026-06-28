@@ -5,6 +5,8 @@ import BrandProducts from "@/components/BrandProducts";
 import { getBrand, getProductsByBrand } from "@/lib/catalog";
 import { brands as seedBrands } from "@/data/catalog";
 
+export const revalidate = 60;
+
 export function generateStaticParams() {
   return seedBrands.map((b) => ({ slug: b.slug }));
 }
