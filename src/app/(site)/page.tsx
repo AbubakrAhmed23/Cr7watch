@@ -81,11 +81,16 @@ export default async function Home() {
 
       {/* ---------------- GÜVEN UNSURLARI ---------------- */}
       <section className="border-y border-line bg-ink-soft">
-        <div className="container-luxe grid grid-cols-1 gap-6 py-10 sm:grid-cols-3">
+        <div className="container-luxe grid grid-cols-1 divide-y divide-line sm:grid-cols-3 sm:divide-x sm:divide-y-0">
           {SITE.trust.map((t) => (
-            <div key={t.title} className="text-center sm:text-left">
+            <div
+              key={t.title}
+              className="flex flex-col items-center px-6 py-8 text-center"
+            >
               <h3 className="font-serif text-base text-gold-light">{t.title}</h3>
-              <p className="mt-1 text-xs leading-relaxed text-muted">{t.text}</p>
+              <p className="mt-1.5 max-w-[15rem] text-xs leading-relaxed text-muted">
+                {t.text}
+              </p>
             </div>
           ))}
         </div>
