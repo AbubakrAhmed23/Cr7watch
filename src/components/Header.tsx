@@ -15,7 +15,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line/70 bg-ink/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-line/70 bg-ink">
       <div className="container-luxe flex h-16 items-center justify-between md:h-20">
         {/* Logo */}
         <Link href="/" className="group flex items-baseline gap-1" onClick={() => setOpen(false)}>

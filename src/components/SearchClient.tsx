@@ -16,10 +16,13 @@ export default function SearchClient({
 }) {
   const [q, setQ] = useState(initialQuery);
   const nameOf = (slug: string) => brandNames[slug] ?? "";
+  const hasQuery = q.trim().length > 0;
+  // Sorgu yoksa tüm kataloğu (yüzlerce kart) DOM'a basmayız — boşken yönlendirme
+  // gösterir, yalnızca arama yapılınca kartları render ederiz (mobilde hızlı).
   const results = useMemo(
-    () => filterProducts(products, q, nameOf),
+    () => (hasQuery ? filterProducts(products, q, nameOf) : []),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [q, products]
+    [q, products, hasQuery]
   );
 
   return (
@@ -43,9 +46,15 @@ export default function SearchClient({
         </div>
       </div>
 
-      <p className="mb-6 text-sm text-muted">{results.length} sonuç</p>
+      {hasQuery && (
+        <p className="mb-6 text-sm text-muted">{results.length} sonuç</p>
+      )}
 
-      {results.length === 0 ? (
+      {!hasQuery ? (
+        <p className="py-16 text-center text-muted">
+          Aramak için yukarıya bir marka, model veya referans yazın.
+        </p>
+      ) : results.length === 0 ? (
         <p className="py-16 text-center text-muted">
           “{q}” için sonuç bulunamadı. Farklı bir kelime deneyin.
         </p>

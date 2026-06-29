@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import SmartImage from "./SmartImage";
 import type { ProductImage } from "@/lib/types";
 
@@ -20,16 +20,26 @@ export default function ProductGallery({
   const many = safe.length > 1;
   const canZoom = Boolean(current.url);
 
+  const frame = useRef(0);
+
   const go = (dir: number) =>
     setIndex((i) => (i + dir + safe.length) % safe.length);
 
+  // Fare hareketini requestAnimationFrame ile kareye sabitle (60fps) — her
+  // pikselde reflow/repaint yerine kare başına bir kez güncelle.
   function onMove(e: React.MouseEvent<HTMLDivElement>) {
     if (!canZoom) return;
-    const r = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - r.left) / r.width) * 100;
-    const y = ((e.clientY - r.top) / r.height) * 100;
-    e.currentTarget.style.setProperty("--zoom-x", `${x}%`);
-    e.currentTarget.style.setProperty("--zoom-y", `${y}%`);
+    const el = e.currentTarget;
+    const { clientX, clientY } = e;
+    if (frame.current) return;
+    frame.current = requestAnimationFrame(() => {
+      frame.current = 0;
+      const r = el.getBoundingClientRect();
+      const x = ((clientX - r.left) / r.width) * 100;
+      const y = ((clientY - r.top) / r.height) * 100;
+      el.style.setProperty("--zoom-x", `${x}%`);
+      el.style.setProperty("--zoom-y", `${y}%`);
+    });
     if (!zoomed) setZoomed(true);
   }
 

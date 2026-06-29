@@ -20,6 +20,15 @@ export default async function SearchPage({
   const brandNames: Record<string, string> = {};
   brands.forEach((b) => (brandNames[b.slug] = b.name));
 
+  // Aramaya gönderilen veriyi hafiflet: arama yalnızca marka/ad/seri/referansı
+  // kullanır, kart yalnızca ilk görseli gösterir. Uzun açıklamayı ve fazladan
+  // görsel adreslerini client'a taşımayız → mobilde geçiş çok daha akıcı.
+  const lite = products.map((p) => ({
+    ...p,
+    images: p.images.slice(0, 1),
+    description: undefined,
+  }));
+
   return (
     <div className="container-luxe py-12 md:py-16">
       <header className="mb-8 text-center">
@@ -28,7 +37,7 @@ export default async function SearchPage({
       </header>
 
       <SearchClient
-        products={products}
+        products={lite}
         brandNames={brandNames}
         initialQuery={q ?? ""}
       />

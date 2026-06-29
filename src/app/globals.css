@@ -140,7 +140,6 @@ h1, h2, h3, .font-serif {
   opacity: 0;
   transform: translateY(26px);
   transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
 }
 .reveal.is-visible {
   opacity: 1;
@@ -148,6 +147,10 @@ h1, h2, h3, .font-serif {
 }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
+  /* Düşük güç / hareket hassasiyeti: sürekli animasyonları durdur. */
+  .marquee-track { animation: none; }
+  .pulse-ring::before { animation: none; }
+  html { scroll-behavior: auto; }
 }
 
 /* Akan marka şeridi */
