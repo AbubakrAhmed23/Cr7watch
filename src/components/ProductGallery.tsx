@@ -63,7 +63,7 @@ export default function ProductGallery({
 
         {/* Yakınlaştırma ipucu */}
         {canZoom && !zoomed && (
-          <span className="pointer-events-none absolute bottom-4 right-4 z-10 hidden items-center gap-1.5 rounded-full border border-line bg-surface/85 px-3 py-1 text-[11px] text-muted backdrop-blur md:flex">
+          <span className="pointer-events-none absolute bottom-4 right-4 z-10 hidden items-center gap-1.5 rounded-full border border-line bg-surface/95 px-3 py-1 text-[11px] text-muted md:flex">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5M11 8v6M8 11h6" strokeLinecap="round" />
             </svg>
@@ -72,7 +72,7 @@ export default function ProductGallery({
         )}
 
         {current.label && (
-          <span className="absolute left-4 top-4 rounded-full border border-line bg-ink/70 px-3 py-1 text-xs tracking-wide text-cream/90 backdrop-blur">
+          <span className="absolute left-4 top-4 rounded-full border border-line bg-ink/90 px-3 py-1 text-xs tracking-wide text-cream/90">
             {current.label}
           </span>
         )}
@@ -83,7 +83,7 @@ export default function ProductGallery({
               type="button"
               onClick={() => go(-1)}
               aria-label="Önceki açı"
-              className="group absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-ink/70 text-cream backdrop-blur transition-colors hover:border-gold hover:text-gold-light"
+              className="group absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-ink/90 text-cream transition-colors hover:border-gold hover:text-gold-light"
             >
               <Arrow dir="left" />
             </button>
@@ -91,7 +91,7 @@ export default function ProductGallery({
               type="button"
               onClick={() => go(1)}
               aria-label="Sonraki açı"
-              className="group absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-ink/70 text-cream backdrop-blur transition-colors hover:border-gold hover:text-gold-light"
+              className="group absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-ink/90 text-cream transition-colors hover:border-gold hover:text-gold-light"
             >
               <Arrow dir="right" />
             </button>

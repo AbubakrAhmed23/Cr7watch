@@ -26,12 +26,12 @@ export default function ProductCard({
           sizes="(max-width: 768px) 50vw, 25vw"
         />
         {product.sold ? (
-          <span className="absolute left-3 top-3 rounded-full bg-red-900/80 px-3 py-1 text-[11px] font-medium tracking-wide text-red-100 backdrop-blur">
+          <span className="absolute left-3 top-3 rounded-full bg-red-900/90 px-3 py-1 text-[11px] font-medium tracking-wide text-red-100">
             Satıldı
           </span>
         ) : (
           product.gender !== "unisex" && (
-            <span className="absolute left-3 top-3 rounded-full border border-line bg-ink/70 px-3 py-1 text-[11px] tracking-wide text-cream/90 backdrop-blur">
+            <span className="absolute left-3 top-3 rounded-full border border-line bg-ink/90 px-3 py-1 text-[11px] tracking-wide text-cream/90">
               {GENDER_LABEL[product.gender]}
             </span>
           )
